@@ -2,9 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Guess the Number</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function (){
+            $("#start").click(function (){
+                crossIncome = $("#crossIncome").val();
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    url: "https://htcs5604flaskpayeapp.herokuapp.com/getNetIncome/",
+                    data: JSON.stringify({gross_income: crossIncome}),
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function (err){
+                        console.log(err)
+                    }
+                });
+            });
+        });
+    </script>
+
 </head>
 <body>
-<h1>This is my Web</h1>
+<h1>PAYE</h1>
+<p>
+    Cross Income
+    <input type="number" min="0" max="99999999" id = "crossIncome">
+    <br>
+    Net Income
+    <input readonly type="number" id = "netIncome">
+</p>
+<button id="start">Start</button>
 </body>
 </html>
